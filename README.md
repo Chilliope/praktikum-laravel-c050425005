@@ -40,7 +40,7 @@ php artisan migrate:fresh --seed
 
 php artisan route:list
 
-php artisan servee
+php artisan serve
 
 ## Cara Menjalankan Project
 
