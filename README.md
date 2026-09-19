@@ -61,3 +61,7 @@ php artisan serve
 5. Buka aplikasi melalui browser:
 
    http://127.0.0.1:8000
+
+## Catatan
+
+Repository ini digunakan sebagai bagian dari praktikum Git dan GitHub pada mata kuliah Pemrograman Web.
