@@ -1,32 +1,69 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Daftar Mahasiswa</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('judul', 'Daftar Mahasiswa')
+
+@section('konten')
 
     <h1>Daftar Mahasiswa</h1>
 
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>NIM</th>
-            <th>Nama</th>
-            <th>Email</th>
-            <th>Prodi</th>
-            <th>Semester</th>
-        </tr>
+    <p>Jumlah data: {{ $mahasiswa->count() }}</p>
 
-        @foreach ($data as $mhs)
-            <tr>
-                <td>{{ $mhs->nim }}</td>
-                <td>{{ $mhs->nama }}</td>
-                <td>{{ $mhs->email }}</td>
-                <td>{{ $mhs->prodi }}</td>
-                <td>{{ $mhs->semester }}</td>
-            </tr>
-        @endforeach
-    </table>
+    @forelse ($mahasiswa as $mhs)
 
-</body>
-</html>
+        <p style="background-color: {{ $loop->even ? '#f2f2f2' : '#ffffff' }}; padding: 10px;">
+
+            No: {{ $loop->iteration }} <br>
+
+            NIM: {{ $mhs->nim }} <br>
+
+            Nama: {{ $mhs->nama ?? 'Nama tidak tersedia' }} <br>
+
+            Prodi: {{ $mhs->prodi ?? 'Prodi tidak tersedia' }} <br>
+
+            Semester: {{ $mhs->semester ?? 'Semester tidak tersedia' }} <br>
+
+            Status:
+            @switch(true)
+
+                @case($mhs->semester <= 2)
+                    <span>Mahasiswa Baru</span>
+                    @break
+
+                @case($mhs->semester >= 7)
+                    <span>Tingkat Akhir</span>
+                    @break
+
+                @default
+                    <span>Mahasiswa Aktif</span>
+
+            @endswitch
+
+            <br>
+
+            <a href="{{ route('mahasiswa.show', $mhs->id) }}">
+                Lihat Detail
+            </a>
+
+        </p>
+
+        <hr>
+
+    @empty
+
+        <p>Belum ada data mahasiswa.</p>
+
+    @endforelse
+
+
+    <h2>Pengujian XSS</h2>
+
+    <p>Menggunakan Blade Escaped:</p>
+
+    {{ $ujiXss }}
+
+    {{--
+    <p>Menggunakan Blade Unescaped:</p>
+    {!! $ujiXss !!}
+    --}}
+
+@endsection
